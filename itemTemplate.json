@@ -1,0 +1,18 @@
+[
+    {
+        "model":"main.Item",
+        "fields":{
+            "name": "The Omnipresent Kitty",
+            "amount":"1",
+            "description":"It seems to constantly stare at you... You're not sure what it's thinking about, but you're kind of afraid to know."
+        }
+    },
+    {
+        "model":"main.Item",
+        "fields":{
+            "name": "The Fluffy White Ball",
+            "amount":"1",
+            "description":"It's so... small... and fluffy...!"
+        }
+    }
+]
