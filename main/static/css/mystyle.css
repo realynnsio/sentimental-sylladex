@@ -8,6 +8,12 @@ h3 {
     color: #57b8a8;
 }
 
+.fix{
+    position:fixed;
+    bottom:3%;
+    right:1.5%;
+}
+
 .header {
     position : fixed;
     top:0;
