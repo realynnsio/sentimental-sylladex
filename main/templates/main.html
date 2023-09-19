@@ -1,62 +1,6 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html>
-
-    <head>
-        <title>Sentimental Sylladex</title>
-
-        <style>
-            body {
-                padding-top: 144px;
-                font-family: 'Open Sans';
-
-            }
-
-            h3 {
-                color: #57b8a8;
-            }
-
-            .fix{
-                position:fixed;
-                bottom:3%;
-                right:1.5%;
-            }
-
-            .header {
-                position : fixed;
-                top:0;
-                left:0;
-                right:0;
-                text-align: center;
-                background: #57b8a8;
-                color: white;
-                font-size: 18px;
-            }
-
-            .mainInfo h3, .mainInfo p {
-                display: inline;
-                vertical-align: top;
-                font-size: 16px;
-                line-height: 28px;
-            }
-
-            .mainInfo h3 {
-                font-weight: bold;
-            }
-
-            .classInfo h3, .classInfo p {
-                display: inline;
-                vertical-align: top;
-                font-size: 16px;
-                line-height: 28px;
-            }
-
-            .classInfo h3 {
-                font-weight: bold;
-            }
-        </style>
-    </head>
-
+{% block content %}
     <body>
         <div class="header" style="width:100%; margin: 0px;"> 
             <h1>{{ app_name }}</h1>
@@ -81,7 +25,8 @@
                     <th>Description</th>
                 </tr>
 
-                <!-- Looping all items -->
+                <h3> Amount total: {{ amount_total }} </h3>
+                
                 {% for thing in items %}
                 <tr>
                     <td style="white-space: nowrap;">{{ thing.name }}</td>
@@ -92,11 +37,18 @@
 
             </table>
 
+            <br />
+
+            <a href="{% url 'main:create_item' %}">
+                <button>
+                    Add New Item
+                </button>
+            </a>
+
         </div>
 
-        <!-- Kermit... -->
+        <!-- Kermit -->
         <img src="https://www.seekpng.com/png/full/67-677599_kermit-the-frog.png" class="fix" width="150" height="auto"/>
 
     </body>
-
-</html>
+{% endblock content %}
