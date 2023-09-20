@@ -30,7 +30,7 @@ Salah satu alasan JSON sering digunakan dalam aplikasi web modern adalah karena 
 Keuntungan lain dari penggunaan JSON adalah ia dapat dikonversi *dari* suatu objek Javascript ataupun dikonversi *menjadi* sebuah objek JavaScript. Aspek ini sangat memudahkan para *web developer* yang menggunakan Javascript sebagai *scripting language* utama mereka.
 
 4. ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
-- [x] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
+* ##### Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
 
 Untuk melakukan step ini, saya membuat berkas `forms.py` pada folder `main` yang saya isi dengan `ModelForm` baru sebagai berikut:
 
@@ -61,7 +61,10 @@ def create_item(request):
 
 Saya meng-*import* function yang telah saya buat ini ke dalam `urls.py` dan menambahkan `path('create-item', create_item, name='create_item')` ke dalam list `url_patterns` agar dapat diakses oleh user. Terakhir, saya menambahkan *button* dalam `main.html` yang me-*redirect* user ke laman pembuatan item ini.
 
-- [x] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
+<br>
+
+* ##### Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
+
 Untuk mengimplementasikan step ini, saya membuat beberapa fungsi dalam `views.py` seperti `show_html`, `show_xml`, `show_json`, `show_xml_by_id`, dan `show_json_by_id`. Untuk fungsi yang pertama, saya menginterpretasikannya sebagai fungsi baru yang menampilkan **hanya objek-objek dalam database** sebagai laman HTML yang sederhana. Dengan pemahaman ini, saya kemudian membuat template HTML yang simpel sebagai berikut:
 
 ```
@@ -85,7 +88,10 @@ Dengan mengganti `dataType` dengan xml dan json.
 
 Untuk fungsi `show_xml_by_id` dan `show_json_by_id`, saya kurang lebih menggunakan fungsi yang sama dengan sebelumnya namun dengan menambahkan parameter `id` ke dalam function-nya dan mengganti bagian `data = Item.objects.all()` dengan `data = Item.objects.filter(pk=id)`.
 
-- [x] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
+<br>
+
+* ##### Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
+
 Untuk step ini, saya meng-*import* functions yang telah saya buat dalam step sebelumnya ke dalam `urls.py` dan menambahkan:
 
 ```
