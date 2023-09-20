@@ -1,38 +1,45 @@
 # README.md
 **REV: 20 Sep 2023. Jawaban Tugas 3 ditambahkan.**
+
 Aplikasi ini pernah di-*deploy* di Adaptable melalui link [berikut.](https://sentimental-sylladex.adaptable.app/main/)
 
 ## TUGAS 3
-* ### Apa perbedaan antara form POST dan form GET dalam Django?
+1. ### Apa perbedaan antara form POST dan form GET dalam Django?
 **POST** dan **GET** biasanya digunakan untuk tujuan yang berbeda.
 
 Salah satu kegunaan **POST** adalah saat Django berurusan dengan login form. Saat form ini dikembalikan dengan metode **POST**, browser akan menggabungkan data yang telah dimasukkan, *encode* data tersebut, mengirimkannya ke server, kemudian menerima kembali responsnya. Sebaliknya, **GET** menggabungkan data yang dimasukkan ke dalam string lalu menggunakannya untuk membuat sebuah URL. URL ini berisi alamat tujuan pengiriman data serta *keys* dan *values* dari data tersebut.
 
 Setiap permintaan yang dapat mengubah keadaan sistem - seperti permintaan yang dapat mengubah database - sebaiknya menggunakan **POST**. **GET** hanya patut digunakan untuk permintaan yang tidak mempengaruhi keadaan sistem.
 
-* ### Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+2. ### Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
 XML, JSON, dan HTML memiliki beberapa perbedaan dalam konteks pengiriman data. Selain *syntax*-nya yang berbeda-beda, HTML berfungsi dalam menentukan bagaimana data ditampilkan pada *webpage*, hal ini berbeda dengan XML dan JSON yang merupakan format dari data yang ada, bukan format penampilannya.
 
 **XML**: digunakan untuk menyimpan data. Lebih fleksibel dan *secure* untuk digunakan namun memiliki format penulisan yang lebih kompleks.
+
 **JSON**: digunakan untuk menyimpan data. Mudah untuk ditulis dan dimengerti karena memiliki format yang simpel namun tidak se-fleksibel ataupun se-*secure* XML.
+
 ![Perbedaan XML dan JSON.](https://miro.medium.com/v2/resize:fit:786/format:webp/1*dvI7HYftuM3CokPLB7KTdw.png "Visualisasi perbedaan antara XML dan JSON.")
 
 **HTML**: digunakan untuk membuat tampilan dan struktur halaman web dengan struktur yang berisi elemen-elemen seperti `<div>, <p>, <a>,` dll.
+
 ![HTML.](https://www.simplilearn.com/ice9/free_resources_article_thumb/Bold_italic_underline%20tag.PNG "Visualisasi syntax HTML.")
 
-* ### Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern? 
+3. ### Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern? 
 Salah satu alasan JSON sering digunakan dalam aplikasi web modern adalah karena ia memiliki syntax dalam format *key-value pair* yang membuatnya lebih simpel dan mudah dibaca dibandingkan dengan XML. Ia tidak membutuhkan *tag*, atribut, maupun skema khusus juga. Selain itu, JSON juga mendukung berbagai tipe data seperti string, angka, objek, dan array.
 
 Keuntungan lain dari penggunaan JSON adalah ia dapat dikonversi *dari* suatu objek Javascript ataupun dikonversi *menjadi* sebuah objek JavaScript. Aspek ini sangat memudahkan para *web developer* yang menggunakan Javascript sebagai *scripting language* utama mereka.
 
-* ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
+4. ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
 - [x] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
+
 Untuk melakukan step ini, saya membuat berkas `forms.py` pada folder `main` yang saya isi dengan `ModelForm` baru sebagai berikut:
+
 ```
 class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ["name", "amount", "description"]
+
 ```
 Setelahnya, saya membuat file `create_item.html` dalam folder `templates` yang menentukan bagaimana *webpage* form saya akan ditampilkan pada akhirnya. Di sini saya juga menambahkan CSS seperlunya.
 
@@ -51,10 +58,12 @@ def create_item(request):
     context['form'] = form
     return render(request, "create_item.html", context)
 ```
+
 Saya meng-*import* function yang telah saya buat ini ke dalam `urls.py` dan menambahkan `path('create-item', create_item, name='create_item')` ke dalam list `url_patterns` agar dapat diakses oleh user. Terakhir, saya menambahkan *button* dalam `main.html` yang me-*redirect* user ke laman pembuatan item ini.
 
 - [x] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
 Untuk mengimplementasikan step ini, saya membuat beberapa fungsi dalam `views.py` seperti `show_html`, `show_xml`, `show_json`, `show_xml_by_id`, dan `show_json_by_id`. Untuk fungsi yang pertama, saya menginterpretasikannya sebagai fungsi baru yang menampilkan **hanya objek-objek dalam database** sebagai laman HTML yang sederhana. Dengan pemahaman ini, saya kemudian membuat template HTML yang simpel sebagai berikut:
+
 ```
 <p>Name: {data.name}</p>
 <p>Amount: {data.amount}</p>
@@ -62,19 +71,23 @@ Untuk mengimplementasikan step ini, saya membuat beberapa fungsi dalam `views.py
             
 <hr>
 ```
+
 Fungsi `show_html()` saya melakukan *loop* untuk mengakses semua data yang ada dalam database lalu menambahkannya ke dalam template HTML ini. Setelah semua data ditambahkan, HTML yang sudah lengkap akan dikembalikan kepada user sebagai sebuah HttpResponse.
 
 Untuk fungsi `show_xml` dan `show_json`, saya mengimplementasikannya seperti berikut:
+
 ```
 data = Item.objects.all()
 return HttpResponse(serializers.serialize("dataType", data), content_type="application/dataType")
 ```
+
 Dengan mengganti `dataType` dengan xml dan json.
 
 Untuk fungsi `show_xml_by_id` dan `show_json_by_id`, saya kurang lebih menggunakan fungsi yang sama dengan sebelumnya namun dengan menambahkan parameter `id` ke dalam function-nya dan mengganti bagian `data = Item.objects.all()` dengan `data = Item.objects.filter(pk=id)`.
 
 - [x] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
-Untuk step ini, saya meng-*import* functions yang telah saya buat dalam step sebelumnya ke dalam `urls.py` dan menambahkan
+Untuk step ini, saya meng-*import* functions yang telah saya buat dalam step sebelumnya ke dalam `urls.py` dan menambahkan:
+
 ```
 path('html', show_html, name='show_html'),
     path('xml', show_xml, name='show_xml'),
@@ -82,13 +95,19 @@ path('html', show_html, name='show_html'),
     path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),    
 ```
+
 ke dalam list `url_patterns` agar fungsi-fungsi ini dapat diakses oleh user.
 
-* ### *Screenshots* dari Postman
+5. ### *Screenshots* dari Postman
+
 ![HTML Postman](/README_img/html_postman.jpg?raw=true "HTML Postman")
+
 ![XML Postman](/README_img/xml_postman.jpg?raw=true "XML Postman")
+
 ![JSON Postman](/README_img/json_postman.jpg?raw=true "JSON Postman")
+
 ![XML-by-ID Postman](/README_img/xml_by_id.jpg?raw=true "XML-by-ID Postman")
+
 ![JSOn-by-ID Postman](/README_img/json_by_id.jpg?raw=true "JSOn-by-ID Postman")
 
 
