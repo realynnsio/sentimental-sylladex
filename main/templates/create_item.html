@@ -2,26 +2,29 @@
 
 {% block content %}
 
-<div class="header" style="width:100%; margin: 0px;"> 
-    <h1>{{ app_name }}</h1>
-    <p>
-        A collection of items from the old, the new, and the eternal.
-    </p>
-</div>
+    <div class="header" style="width:100%; margin: 0px;"> 
+        <h1>{{ app_name }}</h1>
+        <p>
+            A collection of items from the old, the new, and the eternal.
+        </p>
+    </div>
 
-<h3>Add New Item</h3>
+    <h3>Add New Item</h3>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Item"/>
+                </td>
+            </tr>
+        </table>
+    </form>
 
-<form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Add Item"/>
-            </td>
-        </tr>
-    </table>
-</form>
+    <!-- Kermit -->
+    <img src="https://static.wikia.nocookie.net/villainsfanon/images/5/53/CMB_Kermit.png/" class="fix" width="220" height="auto" style="right: 0%;"/>
 
 {% endblock %}

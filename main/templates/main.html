@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <body>
+    
         <div class="header" style="width:100%; margin: 0px;"> 
             <h1>{{ app_name }}</h1>
             <p>
@@ -40,7 +40,7 @@
             <br />
 
             <a href="{% url 'main:create_item' %}">
-                <button>
+                <button class="button button1">
                     Add New Item
                 </button>
             </a>
@@ -50,5 +50,5 @@
         <!-- Kermit -->
         <img src="https://www.seekpng.com/png/full/67-677599_kermit-the-frog.png" class="fix" width="150" height="auto"/>
 
-    </body>
+    
 {% endblock content %}

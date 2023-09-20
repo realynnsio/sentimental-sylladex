@@ -29,13 +29,15 @@ def show_main(request):
     return render(request, "main.html", context)
 
 def create_item(request):
+    context = { 'app_name': 'The Sentimental Sylladex' }
+
     form = ItemForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
         form.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
-    context = {'form': form}
+    context['form'] = form
     return render(request, "create_item.html", context)
 
 def show_html(request):
