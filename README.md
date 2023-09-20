@@ -11,6 +11,8 @@ Salah satu kegunaan **POST** adalah saat Django berurusan dengan login form. Saa
 
 Setiap permintaan yang dapat mengubah keadaan sistem - seperti permintaan yang dapat mengubah database - sebaiknya menggunakan **POST**. **GET** hanya patut digunakan untuk permintaan yang tidak mempengaruhi keadaan sistem.
 
+<br>
+
 2. ### Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
 XML, JSON, dan HTML memiliki beberapa perbedaan dalam konteks pengiriman data. Selain *syntax*-nya yang berbeda-beda, HTML berfungsi dalam menentukan bagaimana data ditampilkan pada *webpage*, hal ini berbeda dengan XML dan JSON yang merupakan format dari data yang ada, bukan format penampilannya.
 
@@ -24,10 +26,14 @@ XML, JSON, dan HTML memiliki beberapa perbedaan dalam konteks pengiriman data. S
 
 ![HTML.](https://www.simplilearn.com/ice9/free_resources_article_thumb/Bold_italic_underline%20tag.PNG "Visualisasi syntax HTML.")
 
+<br>
+
 3. ### Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern? 
 Salah satu alasan JSON sering digunakan dalam aplikasi web modern adalah karena ia memiliki syntax dalam format *key-value pair* yang membuatnya lebih simpel dan mudah dibaca dibandingkan dengan XML. Ia tidak membutuhkan *tag*, atribut, maupun skema khusus juga. Selain itu, JSON juga mendukung berbagai tipe data seperti string, angka, objek, dan array.
 
 Keuntungan lain dari penggunaan JSON adalah ia dapat dikonversi *dari* suatu objek Javascript ataupun dikonversi *menjadi* sebuah objek JavaScript. Aspek ini sangat memudahkan para *web developer* yang menggunakan Javascript sebagai *scripting language* utama mereka.
+
+<br>
 
 4. ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step.
 * ##### Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
@@ -103,6 +109,8 @@ path('html', show_html, name='show_html'),
 ```
 
 ke dalam list `url_patterns` agar fungsi-fungsi ini dapat diakses oleh user.
+
+<br>
 
 5. ### *Screenshots* dari Postman
 
