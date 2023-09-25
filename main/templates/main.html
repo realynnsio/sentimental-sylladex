@@ -45,6 +45,14 @@
                 </button>
             </a>
 
+            <a href="{% url 'main:logout' %}">
+                <button class="button button1">
+                    Logout
+                </button>
+            </a>
+
+            <h5>Sesi terakhir login: {{ last_login }}</h5>
+
         </div>
 
         <!-- Kermit -->
