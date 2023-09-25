@@ -114,14 +114,31 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
-# def adjust_amount(request, id, num):
-#     data = Item.objects.filter(pk=id)
+def adjust_amount(request, id, num):
+    dataset = Item.objects.filter(pk=id)
 
-#     if ((data.amount + num) <= 0):
-#         data.delete()
-#     else:
-#         data.amount += num
-#         data.save()
+    for data in dataset:
+        data.amount += num
+        data.save()
 
-#     return redirect('main:main')
-#     # is this right idk what else to do
+    return redirect('main:show_main')
+
+def decrease_amount(request, id, num):
+    dataset = Item.objects.filter(pk=id)
+
+    for data in dataset:
+        if ((data.amount - num) <= 0):
+            data.delete()
+        else:
+            data.amount -= num
+            data.save()
+
+    return redirect('main:show_main')
+
+def delete_item(request, id):
+    dataset = Item.objects.filter(pk=id)
+
+    for data in dataset:
+        data.delete()
+    
+    return redirect('main:show_main')

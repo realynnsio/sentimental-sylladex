@@ -23,6 +23,10 @@
                     <th>Name</th>
                     <th>Amount</th>
                     <th>Description</th>
+                    <th>Increase Item</th>
+                    <th>Decrease Item</th>
+                    <th>Delete Item</th>
+                    
                 </tr>
 
                 <h3> Amount total: {{ amount_total }} </h3>
@@ -32,6 +36,24 @@
                     <td style="white-space: nowrap;">{{ thing.name }}</td>
                     <td style="white-space: nowrap;">{{ thing.amount }}</td>
                     <td style="width: 100%;">{{ thing.description }}</td>
+                    <td>
+                        <a href="/adjust-amount/{{thing.pk}}/1/">
+                            <button class="button button1" id="adjust-btn" type="submit">+1</button>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/decrease-amount/{{thing.pk}}/1/">
+                            <button class="button button1" id="adjust-btn" type="submit">-1</button>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/delete-item/{{thing.pk}}/">
+                            <button class="button button1" id="adjust-btn" type="submit">Delete</button>
+                        </a>
+                    </td>
+                    
                 </tr>
                 {% endfor %}
 
