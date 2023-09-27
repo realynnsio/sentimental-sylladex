@@ -1,7 +1,71 @@
 # README.md
 **REV: 20 Sep 2023. Jawaban Tugas 3 ditambahkan.**
+**REV: 27 Sep 2023. Jawaban Tugas 4 ditambahkan.**
 
 Aplikasi ini pernah di-*deploy* di Adaptable melalui link [berikut.](https://sentimental-sylladex.adaptable.app/main/)
+
+## TUGAS 4
+
+### 1.
+Django UserCreationForm adalah modul bawaan dari Django yang digunakan untuk membuat user baru yang dapat menggunakan aplikasi web yang sedang dikembangkan. UserCreationForm memiliki tiga bidang: nama pengguna, password1, dan password2 (yang digunakan untuk mengonfirmasi password1). Untuk menggunakan UserCreationForm, kita perlu mengimpornya terlebih dahulu dari django. contrib. auth.
+
+#### PROS:
+* **Mempercepat Waktu Development.** Penggunaan UserCreationForm dari Django yang dapat langsung menangani registrasi user mengurangi beban dari developer untuk membuat formulir registrasi kustom dari awal.
+* **Validasi otomatis.** UserCreationForm memiliki sistem validasinya sendiri untuk username dan password agar aman dan sesuai ketentuan. Developer tidak perlu mengimplementasikan validasi lagi.
+* **Integrasi yang lebih mudah.** Karena UserCreationForm ini adalah modul dari Django, ia sangat kompatibel dengan sistem authentication bawaan Django. 
+* **Security.** Penggunaan UserCreationForm menambahkan layer keamanan yang baik dengan melakukan hashing terhadap kata sandi user.
+
+#### CONS:
+* **Customization terbatas.** Walau developer dapat menambahkan bidang tambahan dalam UserCreationForm, bila ada terlalu banyak perubahan yang ingin dilakukan, akan lebih baik untuk membuat formulir pendaftaran custom saja.
+* **Tampilan terbatas.** Tampilan HTML dari UserCreationForm mungkin tidak sesuai dengan desain dari aplikasi. Bila seperti ini, developer harus mengeluarkan upaya tambahan untuk menyesuaikan penampilan FrontEnd-nya.
+* **Validasi yang Dibatasi.** Ketentuan username dan password & validasi yang diterapkan oleh UserCreationForm mungkin terlalu membatasi bagi aplikasi yang ingin dikembangkan. 
+* **Dependencies.** Bila menggunakan UserCreationForm, pembuatan user akan menggunakan sistem authentication Django. Bila ingin menggunakan sistem authentication lain, ada banyak kerjaan tambahan yang harus dilakukan oleh developer.
+
+*(Source: https://www.javatpoint.com/django-usercreationform)*
+
+### 2.
+Dalam Django, autentikasi memverifikasi bahwa seorang user benar merupakan user tersebut sedangkan otorisasi menentukan apa yang boleh dilakukan oleh user yang telah diautentikasi.
+
+Kedua hal ini penting untuk keamanan dan perlindungan data. Autentikasi dan otorisasi dalam Django memverifikasi identitas pengguna sehingga tidak sembarang orang dapat mengakses aplikasi, serta mencegah pengguna dalam mengakses atau mengubah data yang seharusnya tidak dapat mereka akses.
+
+*(Source: https://docs.djangoproject.com/en/4.2/topics/auth/)*
+
+### 3.
+Cookie dalam konteks aplikasi web adalah sepotong data dari website yang disimpan dalam web browser. Cookies ini dapat diakses kembali oleh website yang menyimpannya di kemudian hari. Ia digunakan untuk memberitahu server bahwa seorang user telah kembali ke website & memberikan informasi kepada website tersebut untuk menampilkan pengaturan dan konten yang sesuai dengan kunjungan-kunjungan user sebelumnya.
+
+Django menyediakan session framework yang dapat menyimpan dan mengambil data berdasarkan setiap pengunjung situs. Django mengabstraksi proses pengiriman & penerimaan cookie dengan menempatkan session ID cookie di sisi klien namun menyimpan semua data terkait di sisi server. Hal ini membuat datanya sendiri tidak disimpan di sisi klien, membuatnya lebih baik dalam konteks keamanan.
+
+*(Source: https://www.trendmicro.com/vinfo/us/security/definition/cookies, https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Sessions)*
+
+### 4.
+Penggunaan cookies dalam pengembangan web biasanya aman, namun ada juga risiko yang perlu diwaspadai. Cookies dapat mengungkapkan informasi pribadi dari seorang user, seperti riwayat penelusuran ataupun lokasi mereka. Dalam situs-situs yang tidak terenkripsi, hal ini dapat membahayakan user karena peretas akan dapat menyadap dan memanipulasi data ini dalam waktu-waktu tertentu (ex. saat user menggunakan wifi publik). Selain itu, cookies mungkin tidak berfungsi dengan baik di platform-platform yang berbeda karena ukuran dan formatnya yang bervariasi. Cookies juga dapat meningkatkan jumlah data yang ditransfer antara server dan browser, sehingga menghabiskan lebih banyak bandwidth dan sumber daya.
+
+*(Source: https://www.linkedin.com/advice/0/how-do-cookies-affect-web-performance-seo-skills-web-applications)*
+
+### 5.
+Pertama, untuk mengimplementasikan sistem registrasi saya menambahkan dulu fungsi `register()` pada file `views.py` yang ada pada `main`. Fungsi ini akan dipanggil saat user ingin meregistrasi diri melalui page `register.html` dan menghandlenya dengan `UserCreationForm`. Setelah membuat membuat metode untuk registrasi pada `views.py`, saya membuat page `register.html` pada `main/templates/` agar fungsi tersebut dapat diakses. Setelah dua hal ini selesai, saya menambahkan fungsi `register()` ke dalam berkas `urls.py` dan `path('register/', register, name='register')` ke dalam `urlpattern`s-nya.
+
+Untuk mekanisme login, saya kurang lebih melakukan hal yang sama: membuat fungsi `login_user()` pada `views.py` (yang menggunakan `authenticate` dari `django.contrib.auth`) kemudian membuat page `login.html` pada `main/templates/` agar fungsi tersebut dapat diakses. Saya menambahkan `login_user()` ke dalam `urls.py` dan `path('login/', login_user, name='login')` ke dalam `urlpatterns`-nya juga.
+
+Beda dengan fungsi register dan fungsi login, setelah fungsi `logout_user()` saya buat pada `views.py`, saya tidak membuat page HTML spesifik untuk pengaksesannya. Saya hanya menambahkan button logout pada `main.html`. Saya juga menambahkan `logout_user()` ke berkas `urls.py` dan `urlpatterns` agar ia bisa digunakan.
+
+Agar user diwajibkan untuk login terlebih dahulu sebelum melihat page `main.html`, saya menambahkan line `@login_required(login_url='/login')` di atas fungsi `show_main()`.
+
+Setelah mengimplementasikan ketiga hal ini, saya mencoba membuat akun dulu di server lokal untuk mengecek bahwa semuanya telah terimplementasi dengan baik.
+
+Step selanjutnya yang saya lakukan adalah mengimplementasikan cookies terlebih dahulu. Saya melakukan hal ini dengan mengimport beberapa modul pada `views.py` seperti `datetime`, `HttpResponseRedirect`, dan `reverse`, kemudian mengatur ulang beberapa fungsi yang sudah saya buat sebelumnya. Saya mengganti isi dari blok `if user is not None` dengan membuat response baru yang menggunakan metode `set_cookie()` untuk variable `last_login` dan mengganti isi dari fungsi `logout_user()` agar memanggil metode `delete_cookie(‘last_login’)`. Saya juga menambahkan context pada fungsi `show_main()` berupa `‘last_login’: request.COOKIES[‘last_login’]` dan mengganti `‘name’` menjadi `request.user.username` agar nama yang ditampilkan sesuai dengan user yang sedang log in dan informasi terakhir kali login dapat ditampilkan pada page `main.html`. Saya kemudian menambahkan line pada `main.html` yang memberitahu user sesi terakhir login mereka.
+
+Setelah mengetes bahwa semua perubahan yang saya buat telah berjalan dengan lancar, saya kemudian menghubungkan setiap `Item` yang ada dengan `User` yang sesuai. Saya pertama menambahkan field `user = models.ForeignKey(User, on_delete=models.CASCADE)` pada class Item yang saya miliki. Kemudian saya mengganti fungsi `create_item()` pada `views.py` agar `item.user` di set dulu sebagai `request.user` sebelum di-save ke database. Kemudian pada `show_main()`, saya memfilter items yang ditunjukkan dengan `Item.objects.filter(user=request.user)` agar seorang user hanya dapat melihat item-item yang mereka sendiri tambahkan. 
+
+Saat tambahan-tambahan ini sudah selesai, saya lakukan `python manage.py makemigrations` dan `python manage.py migrate` untuk mengimplementasikannya. Saya juga menambahkan akun lagi untuk mengecek apakah fungsi-fungsi ini sudah sesuai.
+
+Terakhir, agar tiap akun yang saya miliki hanya memiliki 3 dummy data, saya menambahkan juga tombol increase amount, decrease amount, dan delete item pada page `main.html` saya. Saya membuat fungsi untuk penerapan 3 buttons ini pada `views.py` dengan mengambil `pk` yang sesuai dengan item yang ingin ditambahkan/dikurangi/dihapus, kemudian memfilter `Item` dengan `pk` tersebut dari dataset yang ada dan menambahkan/mengurangi `amount`-nya atau langsung melakukan `data.delete()` bila ingin menghapusnya. Saat menambahkan dan mengurangi amount item, saya menambahkan `data.save()` juga agar perubahan yang terjadi dapat disimpan. Terakhir, saya menambahkan `return redirect(‘main:show_main’)` agar halaman langsung ditunjukkan kembali untuk memperlihatkan perubahan yang telah dilakukan. Saya menambahkan ketiga fungsi ini pada `urls.py` agar bisa diakses oleh user.
+
+Setelah melakukan semua ini, saya menyelesaikan Tugas 4 dengan menjawab pertanyaan-pertanyaan yang diberikan pada `README.md`.
+
+<br>
+<br>
+<br>
 
 ## TUGAS 3
 1. ### Apa perbedaan antara form POST dan form GET dalam Django?
@@ -124,6 +188,9 @@ ke dalam list `url_patterns` agar fungsi-fungsi ini dapat diakses oleh user.
 
 ![JSOn-by-ID Postman](/README_img/json_by_id.jpg?raw=true "JSOn-by-ID Postman")
 
+<br>
+<br>
+<br>
 
 ## TUGAS 2
 * ### Cara Mengimplementasikan Checklist
