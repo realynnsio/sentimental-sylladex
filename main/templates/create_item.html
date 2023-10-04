@@ -1,30 +1,78 @@
 {% extends 'base.html' %} 
 
+{% block meta %}
+    <title>Add Item</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock meta %}
+
 {% block content %}
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top shadow" style="background-color: #57b8a8;">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: white; font-size: 28px; font-weight: bold;" href="#">
+                {{ app_name }}
+            </a>
+            <a href="{% url 'main:show_main' %}">
+                <button class="button button1">Back</button>
+            </a>
+        </div>
+    </nav>
+    <!-- Navbar -->
+  </header>
 
-    <div class="header" style="width:100%; margin: 0px;"> 
-        <h1>{{ app_name }}</h1>
-        <p>
-            A collection of items from the old, the new, and the eternal.
-        </p>
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div>
+                <h1>Add New Item</h1>
+                <p>Tell us what you want to put into your Sentimental Sylladex!</p>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Add Item"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
-
-    <h3>Add New Item</h3>
-    
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" value="Add Item"/>
-                </td>
-            </tr>
-        </table>
-    </form>
+</div>
 
     <!-- Kermit -->
-    <img src="https://static.wikia.nocookie.net/villainsfanon/images/5/53/CMB_Kermit.png/" class="fix" width="220" height="auto" style="right: 0%;"/>
+    <!-- <img src="https://static.wikia.nocookie.net/villainsfanon/images/5/53/CMB_Kermit.png/" class="fix" width="220" height="auto" style="right: 0%;"/> -->
+
+    <br/>
+
+<!-- Footer -->
+<footer
+class="text-center text-lg-start text-dark"
+style="background-color: #ECEFF1"
+>
+<section
+   class="d-flex justify-content-between p-4 text-white"
+   style="background-color: #57b8a8"
+   >
+<div class="me-auto">
+<span>A collection of items from the old, the new, and the eternal. The Kermit aesthetic was decided on a whim. Please don't ask why, I don't know either.</span>
+</div>
+</section>
+
+<!-- Copyright -->
+<div
+class="text-center p-3"
+style="background-color: #57b8a8; color: white;"
+>
+© 2023 Copyright
+</div>
+<!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 
 {% endblock %}

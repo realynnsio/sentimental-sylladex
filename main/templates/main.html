@@ -1,24 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top shadow" style="background-color: #57b8a8;">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: white; font-size: 28px; font-weight: bold;" href="#">
+                {{ app_name }}
+            </a>
+            <a href="{% url 'main:logout' %}">
+                <button class="button button1">Logout</button>
+            </a>
+        </div>
+    </nav>
+    <!-- Navbar -->
+  
+    <!-- Background image -->
+    <div
+      class="jumbotron p-5 text-center bg-image"
+      style="
+        background-image: url('https://imgix.bustle.com/inverse/ff/19/fc/02/501c/4a8c/9fb5/0a93d3c05cb7.jpeg?w=1200&h=630&fit=crop&crop=faces&fm=jpg');
+        height: 400px;
+        margin-top: 58px;
+      "
+    >
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+            <h1 class="mb-3">Hello, {{ name }}!</h1>
+            <h4 class="mb-3">Welcome back to your {{ pbp_class }} Sentimental Sylladex.</h4>
+            </div>
+        </div>
+    </div>
+    <!-- Background image -->
+
+  </header>
+
     
-        <div class="header" style="width:100%; margin: 0px;"> 
-            <h1>{{ app_name }}</h1>
-            <p>
-                A collection of items from the old, the new, and the eternal.
-            </p>
-        </div>
-
-        <div class="mainInfo">
-            <h3>Nama:</h3> <p>{{ name }}</p>
-        </div>
-
-        <div class="classInfo">
-            <h3>Kelas:</h3> <p>{{ pbp_class }}</p>
-        </div>
-
-        <div class="inventory" style="padding-top: 20px;">
-            <table border="1" cellpadding = "5" cellspacing = "5">
+    <div class="inventory">
+        <table class="table table-hover">
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Amount</th>
@@ -28,14 +49,16 @@
                     <th>Delete Item</th>
                     
                 </tr>
+            </thead>
 
-                <h3> Amount total: {{ amount_total }} </h3>
-                
+            <h3> Item Total: {{ amount_total }} </h3>
+            
+            <tbody class="table-group-divider">
                 {% for thing in items %}
                 <tr>
                     <td style="white-space: nowrap;">{{ thing.name }}</td>
                     <td style="white-space: nowrap;">{{ thing.amount }}</td>
-                    <td style="width: 100%;">{{ thing.description }}</td>
+                    <td style="width: stretch;">{{ thing.description }}</td>
                     <td>
                         <a href="/adjust-amount/{{thing.pk}}/1/">
                             <button class="button button1" id="adjust-btn" type="submit">+1</button>
@@ -56,29 +79,47 @@
                     
                 </tr>
                 {% endfor %}
+            </tbody>
+            <caption>Sesi terakhir login: {{ last_login }}</caption>
 
-            </table>
+        </table>
 
-            <br />
+        <center>
+            <a class="btn btn-outline-dark btn-lg" href="{% url 'main:create_item' %}" role="button">Add New Item</a>
+        </center>
 
-            <a href="{% url 'main:create_item' %}">
-                <button class="button button1">
-                    Add New Item
-                </button>
-            </a>
+        <br />
+        <br />
 
-            <a href="{% url 'main:logout' %}">
-                <button class="button button1">
-                    Logout
-                </button>
-            </a>
+    </div>
 
-            <h5>Sesi terakhir login: {{ last_login }}</h5>
+    <!-- Kermit -->
+    <!-- <img src="https://www.seekpng.com/png/full/67-677599_kermit-the-frog.png" class="fix" width="150" height="auto"/> -->
 
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-dark"
+            style="background-color: #ECEFF1"
+            >
+      <section
+               class="d-flex justify-content-between p-4 text-white"
+               style="background-color: #57b8a8"
+               >
+        <div class="me-auto">
+          <span>A collection of items from the old, the new, and the eternal. The Kermit aesthetic was decided on a whim. Please don't ask why, I don't know either.</span>
         </div>
+      </section>
 
-        <!-- Kermit -->
-        <img src="https://www.seekpng.com/png/full/67-677599_kermit-the-frog.png" class="fix" width="150" height="auto"/>
+      <!-- Copyright -->
+      <div
+           class="text-center p-3"
+           style="background-color: #57b8a8; color: white;"
+           >
+        © 2023 Copyright
+      </div>
+      <!-- Copyright -->
 
+    </footer>
+    <!-- Footer -->
     
 {% endblock content %}

@@ -2,49 +2,41 @@
 
 {% block meta %}
     <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock meta %}
 
 {% block content %}
 
-<div class="header" style="width:100%; margin: 0px;"> 
-    <h1>Log In</h1>
-    <p>
-        Welcome back to your Sentimental Sylladex.
-    </p>
-</div>
-
-<div class = "login">
-
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div>
+                <h1>Log In</h1>
+                <p>Welcome back to your Sentimental Sylladex.</p>
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Login">
+            </form>
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <br/>
+            <p>Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a></p>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

@@ -3,7 +3,106 @@
 
 **REV: 27 Sep 2023. Jawaban Tugas 4 ditambahkan.**
 
+**REV: 04 Oct 2023. Jawaban Tugas 5 ditambahkan.**
+
 Aplikasi ini pernah di-*deploy* di Adaptable melalui link [berikut.](https://sentimental-sylladex.adaptable.app/main/)
+
+## TUGAS 5
+
+### 1.
+| Selector         | Contoh Syntax    | Manfaat                                                                 |
+| ---------------- | :--------------: | ----------------------------------------------------------------------- |
+| Element Selector | h1 { ... }       | Mengubah properti untuk semua elemen yang memiliki tag HTML yang sama.  |
+| ID Selector      | #header { ... }  | Mengubah properti suatu elemen tunggal yang memiliki nilai ID tertentu. |
+| Class Selector   | .content { ... } | Mengubah properti elemen-elemen yang memiliki class yang sama.          |
+
+*Element Selector* tepat digunakan ketika kita ingin menerapkan *style* yang konsisten kepada semua elemen dari tag HTML tertentu. Misalnya, jika ingin menerapkan ukuran, font, dan warna yang sama untuk semua elemen `<h1>` dalam page, kita dapat menggunakan *element selector*.
+
+*ID Selector* tepat digunakan saat ingin menerapkan *style* pada satu elemen tunggal pada halaman yang memiliki nilai ID tertentu. Karena ID bersifat unik dalam satu halaman web, maka *selector* ini paling cocok digunakan saat ingin menerapkan *style* pada satu elemen spesifik saja.
+
+*Class Selector* tepat digunakan saat ingin menerapkan *style* pada sekelompok elemen tertentu dengan kelas yang sama. Ia cocok saat ingin menerapkan *style* yang konsisten kepada lebih dari satu elemen tanpa memengaruhi elemen lainnya.
+
+### 2.
+| Tag              | Deskripsi                                                               |
+| ---------------- | ----------------------------------------------------------------------- |
+| `<a>` | Mendefinisikan hyperlink. |
+| `<body>` | Mendefinisikan isi dokumen. |
+| `<br>` | Menghasilkan satu baris baru yang kosong. |
+| `<button>` | Membuat tombol yang dapat diklik. |
+| `<caption>` | Mendefinisikan keterangan atau judul tabel. |
+| `<div>` | Menentukan divisi atau bagian dalam dokumen. |
+| `<footer>` | Mendefinisikan footer suatu dokumen atau bagian. |
+| `<form>` | Mendefinisikan formulir HTML untuk input pengguna. |
+| `<head>` | Mendefinisikan bagian kepala dokumen yang berisi informasi tentang dokumen seperti judul. |
+| `<header>` | Mewakili header dokumen atau header suatu bagian. |
+| `<h1>` hingga `<h6>` | Mendefinisikan jenis judul HTML. |
+| `<hr>` | Menghasilkan garis horizontal. |
+| `<html>` | Mendefinisikan akar dokumen HTML. |
+| `<img>` | Mewakili gambar. |
+| `<input>` | Mendefinisikan kontrol input. |
+| `<label>` | Mendefinisikan label untuk kontrol `<input>`. |
+| `<li>` | Mendefinisikan item dalam daftar. |
+| `<meta>` | Memberikan metadata terstruktur tentang konten dokumen. |
+| `<nav>` | Mendefinisikan bagian navigasi (navbar). |
+| `<ol>` | Mendefinisikan daftar yang diurutkan.
+| `<p>` | Mendefinisikan sebuah paragraf. |
+| `<style>` | Menyisipkan informasi gaya (umumnya dalam CSS) ke dalam kepala dokumen. |
+| `<table>` | Mendefinisikan tabel data. |
+| `<tbody>` | Mengelompokkan sekumpulan baris yang mendefinisikan isi utama data tabel. |
+| `<td>` | Mendefinisikan sel dalam tabel. |
+| `<th>` | Mendefinisikan sel header dalam sebuah tabel. |
+| `<thead>` | Mengelompokkan sekumpulan baris yang menjelaskan label kolom tabel. |
+| `<title>` | Mendefinisikan judul dokumen. |
+| `<tr>` | Mendefinisikan deretan sel dalam tabel. |
+| `<ul>` | Mendefinisikan daftar yang tidak berurutan. |
+
+*(Source: https://www.tutorialrepublic.com/html-reference/html5-tags.php)*
+
+### 3.
+Perbedaan utama antara padding dan margin adalah padding merupakan spacing antara konten elemen dan border dari elemen itu sendiri, sedangkan margin adalah spacing yang berada di luar bordernya.
+
+Selain itu, Padding hanya berfungsi pada elemen yang memiliki border. Margin dapat digunakan pada elemen yang tidak memiliki border dan lebih sering digunakan untuk mengatur spacing antara satu elemen dengan elemen lainnya.
+
+Perbedaan lainnya adalah warna latar belakang padding dan border dapat disesuaikan, sedangkan margin pasti transparan.
+
+![Box Model CSS](https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2021/11/css-box-model.webp "Visualisasi Box Model CSS")
+
+*(Source: https://www.hostinger.com/tutorials/padding-vs-margin)*
+
+### 4.
+| Bootstrap | Tailwind CSS |
+| --- | --- |
+| Salah satu framework HTML, CSS, & JS yang paling populer untuk membuat mobile-first application yang responsif. | Framework CSS yang paling populer untuk membuat customized user-interface. |
+| Menawarkan tema dan template siap pakai. | Menawarkan kelas-kelas unik yang mengutamakan utilitas. |
+| Aplikasi yang dibuat menggunakan Bootstrap umumnya terlihat identik karena sudah memiliki templat bawaan untuk situs web. | Aplikasi dan situs web yang dibuat menggunakan Tailwind CSS bersifat unik dan fleksibel. |
+| Framework yang jauh lebih tua yang terbukti responsif dan efisien. Menghemat waktu dalam pengembangan aplikasi. | Framework baru yang masih terus ditingkatkan dan dikembangkan. |
+| Membutuhkan ukuran file yang besar. | Hanya membutuhkan ukuran file yang kecil. |
+
+Kedua framework ini berguna untuk fungsi-fungsi yang berbeda. Jika proyek Anda berisi lebih banyak unsur backend dan hanya memerlukan *styling* yang umum dan cepat untuk diterapkan, maka lebih baik memakai Bootstrap. Sebaliknya, jika proyek Anda memerlukan *styling* yang unik dan memiliki lebih banyak unsur front-end, maka lebih baik memakai Tailwind CSS.
+
+*(Source: https://www.tutorialspoint.com/tailwind-css-vs-bootstrap)*
+
+### 5.
+Pertama, saya menambahkan Bootstrap ke aplikasi saya dengan menambahkan beberapa `link` dan `script` ke blok meta yang ada di dalam `templates/base.html`.
+
+Kemudian, saya membuka dokumentasi Bootstrap dan membaca tutorial untuk hal-hal yang ingin saya tambahkan ke halaman utama saya, yaitu: navbar, footer, dan jumbotron. Setiap kali saya mengalami kesulitan dalam proses *styling* untuk beberapa elemen, saya mencari solusinya di stackoverflow, karena banyak masalah saya yang terlalu spesifik untuk ditemukan solusinya di dokumentasi Bootstrap.
+
+Proses ini cukup efisien bagi saya dalam menambahkan komponen yang saya sebutkan di atas. Ada banyak juga *source code* yang tersedia di internet mengenai implementasi komponen-komponen Bootstrap yang saya baca untuk membantu saya dalam mengerjakan tugas ini.
+
+Setelah saya menyelesaikan halaman utama saya, saya memutuskan untuk membuat halaman login, register, dan pembuatan item saya terlihat konsisten. Saya menemukan bahwa cara paling efisien untuk melakukan ini adalah dengan menggunakan sebuah template stylesheet yang sudah ada dalam file HTML page saya. *Stylesheet* yang saya gunakan dapat dilihat sebagai berikut:
+
+```
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+```
+
+Saya menambahkan stylesheet ini di blok meta halaman login, register, dan pembuatan item saya dan menyesuaikan posisi beberapa label untuk mencapai tampilan yang saya inginkan.
+
+Setelah saya menerapkan semua *style* yang saya inginkan pada page-page dari aplikasi saya, saya menyelesaikan Tugas 5 dengan menjawab pertanyaan-pertanyaan yang diberikan pada `README.md`.
+
+<br/>
+<br/>
+<br/>
 
 ## TUGAS 4
 

@@ -2,38 +2,40 @@
 
 {% block meta %}
     <title>Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock meta %}
 
 {% block content %}  
 
-<div class="header" style="width:100%; margin: 0px;"> 
-    <h1>Register</h1>
-    <p>
-        Have you registered your sylladex yet?
-    </p>
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div>
+                <h1>Register</h1>
+                <p>Have you registered your sylladex yet?</p>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <table>  
+                    {{ form.as_table }}  
+                    <tr>  
+                        <td></td>
+                        <td><input type="submit" name="submit" value="Daftar"/></td>  
+                    </tr>  
+                </table>
+            </form>
+            
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <br/>
+        </div>
+    </div>
 </div>
-
-<div class = "login">
-
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
-
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
 
 {% endblock content %}
