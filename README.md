@@ -5,7 +5,89 @@
 
 **REV: 04 Oct 2023. Jawaban Tugas 5 ditambahkan.**
 
-Aplikasi ini pernah di-*deploy* di Adaptable melalui link [berikut.](https://sentimental-sylladex.adaptable.app/main/)
+**REV: 13 Oct 2023. Jawaban Tugas 6 ditambahkan. Link deployment di-update.**
+
+Aplikasi ini telah di-deploy melalui link [berikut.](http://alma-putri21-tugas.pbp.cs.ui.ac.id/)
+
+## TUGAS 6
+
+### 1.
+*Synchronous programming* dan *asynchronous programming* adalah dua model pemrograman komputer yang berbeda dalam cara mereka menyelesaikan tugas. *Synchronous programming* melakukan tugas satu per satu dalam urutan yang telah ditentukan, memblokir thread utama selama proses ini berlangsung hingga setiap tugas selesai. *Asynchronous programming* memungkinkan tugas diselesaikan dalam urutan apa pun, tanpa memblokir thread utama, dengan menggunakan banyak thread atau mengirimkan banyak permintaan ke server.
+
+### 2.
+*Event-driven programming* adalah sebuah paradigma pemrograman di mana alur programnya ditentukan oleh peristiwa-peristiwa (*events*) yang terjadi selama pelaksanaannya. Event ini dapat berupa input dari pengguna, seperti mengklik tombol atau mengetikkan kunci, atau *System events*, seperti menerima pesan dari program atau thread lain. Sebuah *event-driven program* terdiri dari *main loop* yang mendengarkan apakah sebuah *event* telah terjadi dan memicu *event handler* atau *callback* yang sesuai apabila iya.
+
+Penerapan dari paradigma ini pada Tugas 6 adalah pada *button_add* untuk menambahkan product:
+
+```
+document.getElementById("button_add").onclick = addProduct
+```
+
+Yang memanggil fungsi addProduct() ini:
+
+```
+function addProduct() {
+    fetch("{% url 'main:create_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+    }
+```
+
+Saat ia di-klik.
+
+### 3.
+Di AJAX, *asynchronous programming* diterapkan untuk memungkinkan halaman web berkomunikasi dengan server tanpa memuat ulang halaman, dengan menggunakan objek `XMLHttpRequest`. Objek `XMLHttpRequest` dapat mengirim dan menerima data dari server di 'belakang' proses-proses lainnya, tanpa memblokir thread utama halaman web. Dengan ini, halaman web dapat memperbarui sebagian kontennya secara dinamis, berdasarkan respons server, dan juga menangani interaksi pengguna dengan lancar tanpa perlu memuat ulang halaman setiap kalinya.
+
+### 4.
+Fetch API dan *library* jQuery adalah 2 cara berbeda untuk membuat permintaan HTTP dalam JavaScript. Mereka memiliki beberapa persamaan dan perbedaan sebagai berikut:
+
+| Perbedaan | Fetch API | Library jQuery |
+| - | - | - |
+| Syntax | - Menggunakan promise-based syntax. Lebih ringkas daripada metode jQuery.ajax() | - Menggunakan metode jQuery.ajax() |
+|   | - Secara otomatis mengonversi data menjadi JSON | - Memerlukan langkah tambahan untuk *parsing* respons-nya |
+|   |    | - Memiliki kemampuan untuk mengatur opsi global, menggunakan *shorthand* method, dan menangani error dengan lebih mudah |
+| Features | - Memiliki kemampuan untuk membatalkan *request*, mengalirkan respons, dan menggunakan *service workers* | - Memiliki kemampuan untuk mengatur *timeout*, menggunakan HTTP *interceptors*, dan memantau progres pengunduhan |
+| Compatibility | - Teknologi baru, tidak didukung oleh browser lama seperti Internet Explorer | - Teknologi lama, didukung secara luas oleh mayoritas browser dan tidak memerlukan *tools* tambahan apapun |
+
+Menurut saya, Fetch API lebih cocok untuk pengembangan web modern yang memerlukan kinerja yang tinggi, sedangkan jQuery lebih cocok untuk pengembangan web lama yang memerlukan *backwards compatibility*. **Jadi, untuk proyek ini lebih baik menggunakan Fetch API.**
+
+### 5.
+Dalam pengerjaan tugas ini, saya pertama kali membuat fungsi-fungsi baru dalam `views.py` saya. Fungsi-fungsi baru ini adalah sebagai berikut:
+
+```
+def get_item_json(request):
+    product_item = Item.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def create_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Item(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+```
+
+Setelah membuat kedua fungsi ini, saya menambahkan routing-nya pada berkas `urls.py` agar bisa diakses oleh aplikasi saya. Kemudian, saya mengubah struktur `main.html` saya agar memiliki `Add Item` button yang menggunakan AJAX dan mengubah penyajian data Items menjadi bentuk *cards*. Saya juga menambahkan modal form dalam berkas ini.
+
+Setelah selesai, saya menambahkan function-function JavaScript yang diperlukan dalam bagian `<script>` untuk getProducts, refreshProducts, dan addProduct dan menghubungkannya dengan element-element yang sesuai untuk melengkapi Tugas 6 ini.
+
+Terakhir, saya  mengotak-atik `base.html` yang saya miliki untuk menambahkan beberapa style CSS yang diperlukan dalam main page saya dan melakukan perintah `collectstatic`.
+
+<br/>
+<br/>
+<br/>
 
 ## TUGAS 5
 

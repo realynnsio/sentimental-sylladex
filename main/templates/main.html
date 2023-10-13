@@ -35,9 +35,8 @@
     <!-- Background image -->
 
   </header>
-
     
-    <div class="inventory">
+    <!-- <div class="inventory">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -91,6 +90,51 @@
         <br />
         <br />
 
+    </div> -->
+
+
+    <h3 id="total_items" style="margin: 2.5%; margin-top: 3.5%;"> Item Total: {{ amount_total }} </h3>
+
+    <div id="all_items" class="inventory row row-cols-1 row-cols-md-3 g-4"></div>
+
+    <center>
+        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin: 2.5%;">Add Item</button>
+    </center>
+
+    <p style="margin: 2.5%;">Sesi terakhir login: {{ last_login }}</p>
+
+    
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Item</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Kermit -->
@@ -121,5 +165,83 @@
 
     </footer>
     <!-- Footer -->
+
+
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_item_json' %}").then((res) => res.json())
+        }
+
+        const imageArr = [
+        'https://i.pinimg.com/originals/45/a2/86/45a286f052a589374edc6205957a49af.jpg',
+        'https://i.pinimg.com/originals/4f/3f/ed/4f3fed9d55f6a7ee5aebd45dc32d81e1.jpg',
+        'https://bagbytransfer.com/wp-content/uploads/movie-themuppets.jpg',
+        'https://kingoflimericks.com/wp-content/uploads/2019/04/Kermit-and-the-Mythology-of-Muppets.jpg',
+        'https://i.pinimg.com/736x/a5/af/3c/a5af3c234923c9c1151113f2bc5a7ac0--kermit-the-frog-the-muppets.jpg',
+        'https://toughpigs.com/wp-content/uploads/2016/10/grey7.jpg',
+        ];
+
+        async function refreshProducts() {
+            document.getElementById("all_items").innerHTML = ""
+            const products = await getProducts()
+            let htmlString = ``
+            let total = 0
+            var count = 0;
+            let totalString = `Item Total: `
+            products.forEach((item) => {
+                total += item.fields.amount
+                totalString = `Item Total: ${total}`
+                htmlString += `\n
+                <div class="col">
+                    <div class="card">
+                        <img src="${imageArr[count]}" class="card-img-top"
+                        alt="Kermeet" />
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #57b8a8;">${item.fields.name}</h5>
+                            <p class="card-text">
+                                Amount: ${item.fields.amount}
+                            </p>
+                            <p class="card-text">
+                            ${item.fields.description}
+                            </p>
+                            <a href="/adjust-amount/${item.pk}/1/">
+                                <button class="button button1" id="adjust-btn" type="submit">+1</button>
+                            </a>
+                            <a href="/decrease-amount/${item.pk}/1/">
+                                <button class="button button1" id="adjust-btn" type="submit">-1</button>
+                            </a>
+                            <a href="/delete-item/${item.pk}/">
+                                <button class="button button1" id="adjust-btn" type="submit">Delete</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>\n`
+
+                if (count < 5) {
+                    count++;
+                } else {
+                    count = 0;
+                }
+            })
+            
+            document.getElementById("all_items").innerHTML = htmlString
+            document.getElementById("total_items").innerHTML = totalString
+        }
+
+        refreshProducts()
+
+        function addProduct() {
+            fetch("{% url 'main:create_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        document.getElementById("button_add").onclick = addProduct
+
+    </script>
     
 {% endblock content %}
