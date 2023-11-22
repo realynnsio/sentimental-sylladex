@@ -1,6 +1,7 @@
+import json
 from django.shortcuts import render, redirect
 from main.models import Item
-from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseNotFound, HttpResponseRedirect, HttpResponse, JsonResponse
 from main.forms import ItemForm
 from django.urls import reverse
 from django.core import serializers
@@ -10,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -72,6 +74,26 @@ def show_xml(request):
 
 def show_json(request):
     data = Item.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+# def show_json_by_user(request):
+#     data = Item.objects.filter(user=request.user)
+#     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_json_by_user(request):
+    # Check if the user is authenticated before filtering by user
+    if request.user.is_authenticated:
+        user_id = request.user.id  # Fetch the user's ID
+        data = Item.objects.filter(user_id=user_id)  # Filter items by user ID
+        serialized_data = serializers.serialize('json', data)
+        return HttpResponse(serialized_data, content_type='application/json')
+    else:
+        # Handle the case when the user is not authenticated
+        return HttpResponse("User is not authenticated", status=401)
+    
+def show_json_by_username(request, username):
+    user = User.objects.get(username=username)
+    data = Item.objects.filter(user=user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -162,3 +184,22 @@ def create_ajax(request):
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Item.objects.create(
+            user = request.user,
+            name = data["name"],
+            amount = int(data["amount"]),
+            description = data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
